@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedConnect - Doctor Patient Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #f7fafc;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            color: #2d3748;
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3182ce;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #3182ce;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: white;
+            padding: 0;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .nav-tabs ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-tabs li {
+            flex: 1;
+        }
+
+        .nav-tabs button {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-right: 1px solid #eee;
+        }
+
+        .nav-tabs button:last-child {
+            border-right: none;
+        }
+
+        .nav-tabs button.active {
+            background: #3182ce;
+            color: white;
+        }
+
+        .nav-tabs button:hover:not(.active) {
+            background: #f8f9fa;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #2d3748;
+            border-bottom: 2px solid #3182ce;
+            padding-bottom: 10px;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 15px;
+            background: #3182ce;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Appointments */
+        .appointment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .appointment-item:hover {
+            border-color: #3182ce;
+            background: #ebf8ff;
+        }
+
+        .appointment-info h4 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .appointment-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .appointment-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Messages */
+        .message-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
+        }
+
+        .message-item:hover {
+            background: #f8f9fa;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #3182ce;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message-content h4 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .message-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.1);
+        }
+
+        .btn {
+            background: #3182ce;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #2c5aa0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        /* Video Call */
+        .video-call-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .video-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .video-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .video-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-call {
+            background: #28a745;
+        }
+
+        .btn-mute {
+            background: #ffc107;
+        }
+
+        .btn-end {
+            background: #dc3545;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs ul {
+                flex-direction: column;
+            }
+
+            .nav-tabs button {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            .appointment-item {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🏥 MedConnect</div>
+                <div class="user-info">
+                    <span>Welcome, John Doe</span>
+                    <div class="user-avatar">JD</div>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <ul>
+                <li><button class="active" onclick="showSection('dashboard')">Dashboard</button></li>
+                <li><button onclick="showSection('appointments')">Appointments</button></li>
+                <li><button onclick="showSection('messages')">Messages</button></li>
+                <li><button onclick="showSection('video-call')">Video Call</button></li>
+                <li><button onclick="showSection('prescriptions')">Prescriptions</button></li>
+                <li><button onclick="showSection('profile')">Profile</button></li>
+            </ul>
+        </nav>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section">
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-icon">📅</div>
+                    <h3>Next Appointment</h3>
+                    <p>Tomorrow, 2:00 PM<br>Dr. Sarah Wilson</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💊</div>
+                    <h3>Active Prescriptions</h3>
+                    <p>3 medications<br>2 refills due</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h3>Test Results</h3>
+                    <p>2 new results<br>Available to view</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💬</div>
+                    <h3>Messages</h3>
+                    <p>1 unread message<br>From Dr. Johnson</p>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="content-section">
+                    <h2 class="section-title">Recent Activity</h2>
+                    <div class="appointment-item">
+                        <div class="appointment-info">
+                            <h4>Blood Test Results</h4>
+                            <p>Received from Dr. Sarah Wilson - All values normal</p>
+                        </div>
+                        <span class="appointment-status status-confirmed">Reviewed</span>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="appointment-info">
+                            <h4>Prescription Refill</h4>
+                            <p>Metformin refill requested - Pending approval</p>
+                        </div>
+                        <span class="appointment-status status-pending">Pending</span>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="appointment-info">
+                            <h4>Video Consultation</h4>
+                            <p>Completed with Dr. Johnson - Follow-up scheduled</p>
+                        </div>
+                        <span class="appointment-status status-confirmed">Completed</span>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="section-title">Quick Actions</h2>
+                    <button class="btn" style="width: 100%; margin-bottom: 15px;"
+                        onclick="showSection('appointments')">Schedule Appointment</button>
+                    <button class="btn" style="width: 100%; margin-bottom: 15px;" onclick="showSection('messages')">Send
+                        Message</button>
+                    <button class="btn" style="width: 100%; margin-bottom: 15px;"
+                        onclick="requestPrescription()">Request Prescription</button>
+                    <button class="btn" style="width: 100%;" onclick="showSection('video-call')">Start Video
+                        Call</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appointments Section -->
+        <section id="appointments" class="section hidden">
+            <div class="main-content">
+                <div class="content-section">
+                    <h2 class="section-title">Schedule New Appointment</h2>
+                    <form onsubmit="scheduleAppointment(event)">
+                        <div class="form-group">
+                            <label for="doctor">Select Doctor</label>
+                            <select id="doctor" required>
+                                <option value="">Choose a doctor</option>
+                                <option value="dr-wilson">Dr. Sarah Wilson - Cardiology</option>
+                                <option value="dr-johnson">Dr. Mark Johnson - General Medicine</option>
+                                <option value="dr-smith">Dr. Emily Smith - Dermatology</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Preferred Date</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Preferred Time</label>
+                            <select id="time" required>
+                                <option value="">Choose time</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="15:00">3:00 PM</option>
+                                <option value="16:00">4:00 PM</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reason">Reason for Visit</label>
+                            <textarea id="reason" rows="4"
+                                placeholder="Brief description of your symptoms or reason for visit"></textarea>
+                        </div>
+                        <button type="submit" class="btn">Schedule Appointment</button>
+                    </form>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="section-title">Upcoming Appointments</h2>
+                    <div class="appointment-item">
+                        <div class="appointment-info">
+                            <h4>Dr. Sarah Wilson</h4>
+                            <p>Tomorrow, 2:00 PM - Cardiology Checkup</p>
+                        </div>
+                        <div>
+                            <span class="appointment-status status-confirmed">Confirmed</span>
+                            <button class="btn btn-secondary" style="margin-left: 10px;"
+                                onclick="cancelAppointment(1)">Cancel</button>
+                        </div>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="appointment-info">
+                            <h4>Dr. Mark Johnson</h4>
+                            <p>Next Friday, 10:00 AM - General Checkup</p>
+                        </div>
+                        <div>
+                            <span class="appointment-status status-pending">Pending</span>
+                            <button class="btn btn-secondary" style="margin-left: 10px;"
+                                onclick="cancelAppointment(2)">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Messages Section -->
+        <section id="messages" class="section hidden">
+            <div class="main-content">
+                <div class="content-section">
+                    <h2 class="section-title">Messages</h2>
+                    <div class="message-item">
+                        <div class="message-avatar">SW</div>
+                        <div class="message-content">
+                            <h4>Dr. Sarah Wilson</h4>
+                            <p>Your blood test results are in. Everything looks normal. Please continue with your
+                                current medication schedule.</p>
+                            <div class="message-time">2 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="message-item">
+                        <div class="message-avatar">MJ</div>
+                        <div class="message-content">
+                            <h4>Dr. Mark Johnson</h4>
+                            <p>Don't forget to bring your insurance card for tomorrow's appointment. Also, please fast
+                                for 8 hours before the blood work.</p>
+                            <div class="message-time">Yesterday</div>
+                        </div>
+                    </div>
+                    <div class="message-item">
+                        <div class="message-avatar">ES</div>
+                        <div class="message-content">
+                            <h4>Dr. Emily Smith</h4>
+                            <p>The prescription for your skin condition has been sent to your pharmacy. You should be
+                                able to pick it up this afternoon.</p>
+                            <div class="message-time">3 days ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="section-title">Send New Message</h2>
+                    <form onsubmit="sendMessage(event)">
+                        <div class="form-group">
+                            <label for="recipient">To</label>
+                            <select id="recipient" required>
+                                <option value="">Select doctor</option>
+                                <option value="dr-wilson">Dr. Sarah Wilson</option>
+                                <option value="dr-johnson">Dr. Mark Johnson</option>
+                                <option value="dr-smith">Dr. Emily Smith</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="Message subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" placeholder="Type your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Call Section -->
+        <section id="video-call" class="section hidden">
+            <div class="content-section">
+                <h2 class="section-title">Video Consultation</h2>
+                <div class="video-call-section">
+                    <div class="video-placeholder" id="videoArea">
+                        Click "Start Call" to begin video consultation
+                    </div>
+                    <div class="video-controls">
+                        <button class="video-btn btn-call" onclick="startCall()" title="Start Call">📞</button>
+                        <button class="video-btn btn-mute" onclick="toggleMute()" title="Mute/Unmute">🔇</button>
+                        <button class="video-btn btn-end" onclick="endCall()" title="End Call">📵</button>
+                    </div>
+                    <p style="margin-top: 20px; color: #666;">
+                        Make sure you have a stable internet connection and your camera/microphone permissions are
+                        enabled.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prescriptions Section -->
+        <section id="prescriptions" class="section hidden">
+            <div class="content-section">
+                <h2 class="section-title">My Prescriptions</h2>
+                <div class="appointment-item">
+                    <div class="appointment-info">
+                        <h4>Metformin 500mg</h4>
+                        <p>Prescribed by Dr. Sarah Wilson - Take twice daily with meals<br>Refills: 2 remaining</p>
+                    </div>
+                    <button class="btn" onclick="requestRefill('Metformin')">Request Refill</button>
+                </div>
+                <div class="appointment-item">
+                    <div class="appointment-info">
+                        <h4>Lisinopril 10mg</h4>
+                        <p>Prescribed by Dr. Sarah Wilson - Take once daily<br>Refills: 3 remaining</p>
+                    </div>
+                    <button class="btn" onclick="requestRefill('Lisinopril')">Request Refill</button>
+                </div>
+                <div class="appointment-item">
+                    <div class="appointment-info">
+                        <h4>Hydrocortisone Cream 1%</h4>
+                        <p>Prescribed by Dr. Emily Smith - Apply twice daily to affected area<br>Refills: 1 remaining
+                        </p>
+                    </div>
+                    <button class="btn" onclick="requestRefill('Hydrocortisone')">Request Refill</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="section hidden">
+            <div class="content-section">
+                <h2 class="section-title">My Profile</h2>
+                <form onsubmit="updateProfile(event)">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" value="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" value="john.doe@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" value="+1 (555) 123-4567" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" value="1990-05-15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" rows="3" required>123 Main Street, Springfield, IL 62701</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="insurance">Insurance Provider</label>
+                        <input type="text" id="insurance" value="Blue Cross Blue Shield" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emergency">Emergency Contact</label>
+                        <input type="text" id="emergency" value="Jane Doe - (555) 987-6543" required>
+                    </div>
+                    <button type="submit" class="btn">Update Profile</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Store data in memory
+        let messages = [
+            {
+                id: 1,
+                from: 'Dr. Sarah Wilson',
+                avatar: 'SW',
+                content: 'Your blood test results are in. Everything looks normal. Please continue with your current medication schedule.',
+                time: '2 hours ago',
+                read: true
+            },
+            {
+                id: 2,
+                from: 'Dr. Mark Johnson',
+                avatar: 'MJ',
+                content: 'Don\'t forget to bring your insurance card for tomorrow\'s appointment. Also, please fast for 8 hours before the blood work.',
+                time: 'Yesterday',
+                read: true
+            },
+            {
+                id: 3,
+                from: 'Dr. Emily Smith',
+                avatar: 'ES',
+                content: 'The prescription for your skin condition has been sent to your pharmacy. You should be able to pick it up this afternoon.',
+                time: '3 days ago',
+                read: false
+            }
+        ];
+
+        let appointments = [
+            {
+                id: 1,
+                doctor: 'Dr. Sarah Wilson',
+                specialty: 'Cardiology',
+                date: 'Tomorrow',
+                time: '2:00 PM',
+                reason: 'Cardiology Checkup',
+                status: 'Confirmed'
+            },
+            {
+                id: 2,
+                doctor: 'Dr. Mark Johnson',
+                specialty: 'General Medicine',
+                date: 'Next Friday',
+                time: '10:00 AM',
+                reason: 'General Checkup',
+                status: 'Pending'
+            }
+        ];
+
+        // Navigation functionality
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.nav-tabs button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Refresh content when switching sections
+            if (sectionId === 'messages') {
+                renderMessages();
+            } else if (sectionId === 'appointments') {
+                renderAppointments();
+            }
+        }
+
+        // Render messages dynamically
+        function renderMessages() {
+            const messagesContainer = document.querySelector('#messages .content-section');
+            let messagesHTML = '<h2 class="section-title">Messages</h2>';
+
+            messages.forEach(msg => {
+                messagesHTML += `
+                    <div class="message-item">
+                        <div class="message-avatar">${msg.avatar}</div>
+                        <div class="message-content">
+                            <h4>${msg.from}</h4>
+                            <p>${msg.content}</p>
+                            <div class="message-time">${msg.time}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            messagesContainer.innerHTML = messagesHTML;
+        }
+
+        // Render appointments dynamically
+        function renderAppointments() {
+            const appointmentsContainer = document.querySelector('#appointments .content-section:last-child');
+            let appointmentsHTML = '<h2 class="section-title">Upcoming Appointments</h2>';
+
+            appointments.forEach(apt => {
+                const statusClass = apt.status.toLowerCase() === 'confirmed' ? 'status-confirmed' : 'status-pending';
+                appointmentsHTML += `
+                    <div class="appointment-item">
+                        <div class="appointment-info">
+                            <h4>${apt.doctor}</h4>
+                            <p>${apt.date}, ${apt.time} - ${apt.reason}</p>
+                        </div>
+                        <div>
+                            <span class="appointment-status ${statusClass}">${apt.status}</span>
+                            <button class="btn btn-secondary" style="margin-left: 10px;" onclick="cancelAppointment(${apt.id})">Cancel</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            appointmentsContainer.innerHTML = appointmentsHTML;
+        }
+
+        // Schedule appointment
+        function scheduleAppointment(event) {
+            event.preventDefault();
+            const doctorSelect = document.getElementById('doctor');
+            const doctorValue = doctorSelect.value;
+            const doctorText = doctorSelect.options[doctorSelect.selectedIndex].text;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const reason = document.getElementById('reason').value;
+
+            if (doctorValue && date && time) {
+                // Add new appointment to the list
+                const newAppointment = {
+                    id: appointments.length + 1,
+                    doctor: doctorText.split(' - ')[0],
+                    specialty: doctorText.split(' - ')[1] || 'General',
+                    date: new Date(date).toLocaleDateString(),
+                    time: document.getElementById('time').options[document.getElementById('time').selectedIndex].text,
+                    reason: reason || 'General consultation',
+                    status: 'Pending'
+                };
+
+                appointments.push(newAppointment);
+
+                alert(`Appointment request sent successfully!\n\nDoctor: ${newAppointment.doctor}\nDate: ${newAppointment.date}\nTime: ${newAppointment.time}\nReason: ${newAppointment.reason}`);
+
+                // Reset form
+                event.target.reset();
+
+                // Update dashboard
+                updateDashboard();
+            }
+        }
+
+        // Cancel appointment
+        function cancelAppointment(appointmentId) {
+            if (confirm('Are you sure you want to cancel this appointment?')) {
+                // Remove appointment from array
+                appointments = appointments.filter(apt => apt.id !== appointmentId);
+
+                alert(`Appointment has been cancelled successfully.`);
+
+                // Re-render appointments
+                renderAppointments();
+                updateDashboard();
+            }
+        }
+
+        // Send message
+        function sendMessage(event) {
+            event.preventDefault();
+            const recipientSelect = document.getElementById('recipient');
+            const recipientValue = recipientSelect.value;
+            const recipientText = recipientSelect.options[recipientSelect.selectedIndex].text;
+            const subject = document.getElementById('subject').value;
+            const messageText = document.getElementById('message').value;
+
+            if (recipientValue && subject && messageText) {
+                // Add new message to the beginning of messages array
+                const newMessage = {
+                    id: messages.length + 1,
+                    from: 'You',
+                    avatar: 'ME',
+                    content: `To: ${recipientText}\nSubject: ${subject}\n\n${messageText}`,
+                    time: 'Just now',
+                    read: true
+                };
+
+                messages.unshift(newMessage);
+
+                alert(`Message sent to ${recipientText} successfully!\n\nSubject: ${subject}`);
+
+                // Reset form
+                event.target.reset();
+
+                // Re-render messages
+                renderMessages();
+                updateDashboard();
+            }
+        }
+
+        // Video call functions
+        let callActive = false;
+        let muted = false;
+        let cameraOn = true;
+
+        function startCall() {
+            if (!callActive) {
+                document.getElementById('videoArea').innerHTML = `
+                    <div style="background: #1a202c; height: 100%; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">📹</div>
+                        <div>Video call in progress...</div>
+                        <small style="margin-top: 5px;">Connected to Dr. Sarah Wilson</small>
+                        <div style="margin-top: 20px; font-size: 12px; opacity: 0.8;">Call duration: <span id="callTimer">00:00</span></div>
+                    </div>
+                `;
+                callActive = true;
+                startCallTimer();
+                alert('Video call started! You are now connected with your doctor.');
+            }
+        }
+
+        function toggleMute() {
+            muted = !muted;
+            const muteBtn = document.querySelector('.btn-mute');
+            if (muted) {
+                muteBtn.innerHTML = '🔇';
+                muteBtn.style.background = '#dc3545';
+                alert('Microphone muted');
+            } else {
+                muteBtn.innerHTML = '🔊';
+                muteBtn.style.background = '#ffc107';
+                alert('Microphone unmuted');
+            }
+        }
+
+        function endCall() {
+            if (callActive) {
+                document.getElementById('videoArea').innerHTML = `
+                    <div style="background: #2d3748; height: 100%; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">📵</div>
+                        <div>Call ended</div>
+                        <small style="margin-top: 5px;">Thank you for using our video consultation service</small>
+                    </div>
+                `;
+                callActive = false;
+                muted = false;
+                cameraOn = true;
+
+                // Reset button states
+                document.querySelector('.btn-mute').innerHTML = '🔇';
+                document.querySelector('.btn-mute').style.background = '#ffc107';
+
+                alert('Video call ended successfully.');
+
+                setTimeout(() => {
+                    document.getElementById('videoArea').innerHTML = 'Click "Start Call" to begin video consultation';
+                }, 3000);
+            }
+        }
+
+        function startCallTimer() {
+            let seconds = 0;
+            const timer = setInterval(() => {
+                if (!callActive) {
+                    clearInterval(timer);
+                    return;
+                }
+                seconds++;
+                const minutes = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                const timerElement = document.getElementById('callTimer');
+                if (timerElement) {
+                    timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        // Request prescription refill
+        function requestRefill(medication) {
+            const confirmed = confirm(`Are you sure you want to request a refill for ${medication}?`);
+            if (confirmed) {
+                alert(`Refill request for ${medication} has been sent to your doctor for approval. You will receive a notification when it's processed.`);
+
+                // Add a new message from doctor
+                const newMessage = {
+                    id: messages.length + 1,
+                    from: 'Dr. Sarah Wilson',
+                    avatar: 'SW',
+                    content: `Your refill request for ${medication} has been received and is being processed. We'll notify you once it's ready for pickup.`,
+                    time: 'Just now',
+                    read: false
+                };
+                messages.unshift(newMessage);
+                updateDashboard();
+            }
+        }
+
+        // Request new prescription
+        function requestPrescription() {
+            const medication = prompt('Which medication would you like to request?\n\nPlease provide:\n- Medication name\n- Dosage\n- Reason for request');
+            if (medication && medication.trim()) {
+                alert(`Prescription request for "${medication}" has been sent to your doctor for review.`);
+
+                // Add a confirmation message
+                const newMessage = {
+                    id: messages.length + 1,
+                    from: 'MedConnect System',
+                    avatar: 'SYS',
+                    content: `Your prescription request for "${medication}" has been submitted and sent to your primary care physician for review.`,
+                    time: 'Just now',
+                    read: false
+                };
+                messages.unshift(newMessage);
+                updateDashboard();
+            }
+        }
+
+        // Update profile
+        function updateProfile(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+
+            // Simulate profile update
+            document.querySelector('.user-info span').textContent = `Welcome, ${name}`;
+
+            alert('Profile updated successfully!\n\nYour information has been saved securely.');
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                alert('You have been logged out successfully!\n\nThank you for using MedConnect.');
+                // In a real application, this would redirect to login page
+                window.location.reload();
+            }
+        }
+
+        // Update dashboard with current data
+        function updateDashboard() {
+            const nextAppt = appointments.find(apt => apt.status === 'Confirmed') || appointments[0];
+            const unreadCount = messages.filter(msg => !msg.read && msg.from !== 'You').length;
+
+            // Update dashboard cards
+            if (nextAppt) {
+                const nextApptCard = document.querySelector('.card:first-child p');
+                nextApptCard.innerHTML = `${nextAppt.date}, ${nextAppt.time}<br>${nextAppt.doctor}`;
+            }
+
+            const messageCard = document.querySelector('.card:last-child p');
+            messageCard.innerHTML = `${unreadCount} unread message${unreadCount !== 1 ? 's' : ''}<br>Click to view`;
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set minimum date for appointments to today
+            const dateInput = document.getElementById('date');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
+            }
+
+            // Initialize dashboard
+            updateDashboard();
+
+            // Add click handlers for dashboard cards
+            const cards = document.querySelectorAll('.card');
+            cards[0].addEventListener('click', () => showSection('appointments'));
+            cards[1].addEventListener('click', () => showSection('prescriptions'));
+            cards[2].addEventListener('click', () => alert('Test results section would open here in a full application.'));
+            cards[3].addEventListener('click', () => showSection('messages'));
+
+            // Make cards clickable
+            cards.forEach(card => {
+                card.style.cursor = 'pointer';
+            });
+        });
+
+        // Add real-time features simulation
+        function simulateIncomingMessage() {
+            const doctors = [
+                { name: 'Dr. Sarah Wilson', avatar: 'SW' },
+                { name: 'Dr. Mark Johnson', avatar: 'MJ' },
+                { name: 'Dr. Emily Smith', avatar: 'ES' }
+            ];
+
+            const sampleMessages = [
+                'Your test results are ready for review.',
+                'Please remember to take your medication as prescribed.',
+                'Your appointment has been confirmed.',
+                'Lab results show improvement in your condition.',
+                'Please schedule a follow-up appointment.'
+            ];
+
+            const randomDoctor = doctors[Math.floor(Math.random() * doctors.length)];
+            const randomMessage = sampleMessages[Math.floor(Math.random() * sampleMessages.length)];
+
+            const newMessage = {
+                id: messages.length + 1,
+                from: randomDoctor.name,
+                avatar: randomDoctor.avatar,
+                content: randomMessage,
+                time: 'Just now',
+                read: false
+            };
+
+            messages.unshift(newMessage);
+            updateDashboard();
+
+            // Show notification
+            alert(`New message from ${randomDoctor.name}:\n${randomMessage}`);
+        }
+
+        // Simulate incoming messages every 30 seconds (for demo purposes)
+        setInterval(simulateIncomingMessage, 30000);
+    </script>
+</body>
+
+</html>
